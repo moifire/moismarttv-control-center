@@ -1,9 +1,22 @@
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
-*.pyd
 
+# Virtualenv
 venv/
+
+# Base de datos
 database/database.db
-cache/
+
+# Salidas
 output/
+cache/
+
+# IDE
+.vscode/
+.idea/
+
+# Windows
+Thumbs.db
+desktop.ini
