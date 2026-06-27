@@ -4,3 +4,6 @@ beautifulsoup4
 lxml
 pillow
 python-dateutil
+beautifulsoup4
+lxml
+requests

@@ -4,20 +4,6 @@ from . import agenda
 from .service import AgendaService
 
 
-
-@agenda.route("/api/agenda/update", methods=["POST"])
-def update_agenda():
-
-    eventos = AgendaService.update()
-
-    return jsonify({
-
-        "success": True,
-
-        "events": len(eventos)
-
-    })
-
 @agenda.route("/agenda")
 def agenda_home():
 
@@ -27,3 +13,23 @@ def agenda_home():
         "agenda.html",
         eventos=eventos
     )
+
+
+@agenda.route("/api/agenda/update", methods=["POST"])
+def update_agenda():
+
+    try:
+
+        eventos = AgendaService.update()
+
+        return jsonify({
+            "success": True,
+            "events": len(eventos)
+        })
+
+    except Exception as e:
+
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500

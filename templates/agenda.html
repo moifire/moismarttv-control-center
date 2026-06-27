@@ -18,27 +18,25 @@ Agenda Deportiva
 
         <hr>
 
-        <button class="btn btn-main">
-
-            🔄 Actualizar FutbolEnLaTV
-
+        <button id="btnActualizar" class="btn btn-main">
+            <i class="bi bi-arrow-repeat"></i>
+            Actualizar FutbolEnLaTV
         </button>
 
-        <br><br>
+        <div id="resultado" class="mt-3"></div>
 
-        <table class="table table-dark table-hover">
+        <br>
+
+        <table class="table table-dark table-hover align-middle">
 
             <thead>
 
                 <tr>
 
-                    <th>Hora</th>
-
+                    <th width="120">Hora</th>
                     <th>Evento</th>
-
-                    <th>Canal</th>
-
-                    <th></th>
+                    <th width="220">Canal</th>
+                    <th width="120">Acciones</th>
 
                 </tr>
 
@@ -46,29 +44,43 @@ Agenda Deportiva
 
             <tbody>
 
-                {% for e in eventos %}
+                {% if eventos %}
 
-                <tr>
+                    {% for e in eventos %}
 
-                    <td>{{ e.time }}</td>
+                    <tr>
 
-                    <td>{{ e.title }}</td>
+                        <td>{{ e.time }}</td>
 
-                    <td>{{ e.channel }}</td>
+                        <td>{{ e.title }}</td>
 
-                    <td>
+                        <td>{{ e.channel }}</td>
 
-                        <button class="btn btn-sm btn-primary">
+                        <td>
 
-                            Editar
+                            <button class="btn btn-sm btn-primary">
+                                Editar
+                            </button>
 
-                        </button>
+                        </td>
 
-                    </td>
+                    </tr>
 
-                </tr>
+                    {% endfor %}
 
-                {% endfor %}
+                {% else %}
+
+                    <tr>
+
+                        <td colspan="4" class="text-center text-secondary">
+
+                            No hay eventos cargados.
+
+                        </td>
+
+                    </tr>
+
+                {% endif %}
 
             </tbody>
 
@@ -77,5 +89,84 @@ Agenda Deportiva
     </div>
 
 </div>
+
+{% endblock %}
+
+{% block js %}
+
+<script>
+
+const btn = document.getElementById("btnActualizar");
+const resultado = document.getElementById("resultado");
+
+btn.addEventListener("click", async () => {
+
+    btn.disabled = true;
+
+    btn.classList.add("btn-loading");
+
+    btn.innerHTML =
+        '<i class="bi bi-arrow-repeat rotate"></i> Actualizando...';
+
+    resultado.innerHTML = `
+        <div class="alert alert-info">
+            ⏳ Descargando eventos de FutbolEnLaTV...
+        </div>
+    `;
+
+    try {
+
+        const response = await fetch("/api/agenda/update", {
+            method: "POST"
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+
+            resultado.innerHTML = `
+                <div class="alert alert-success">
+                    ✅ Actualización completada correctamente.<br><br>
+                    Eventos importados:
+                    <b>${data.events}</b>
+                </div>
+            `;
+
+        } else {
+
+            resultado.innerHTML = `
+                <div class="alert alert-danger">
+                    ❌ ${data.error}
+                </div>
+            `;
+
+        }
+
+    }
+
+    catch (error) {
+
+        resultado.innerHTML = `
+            <div class="alert alert-danger">
+                ❌ Error de conexión con el servidor.
+            </div>
+        `;
+
+    }
+
+    finally {
+
+        btn.disabled = false;
+
+        btn.classList.remove("btn-loading");
+
+        btn.innerHTML =
+            '<i class="bi bi-arrow-repeat"></i> Actualizar FutbolEnLaTV';
+
+    }
+
+});
+
+</script>
 
 {% endblock %}

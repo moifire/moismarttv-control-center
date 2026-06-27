@@ -1,4 +1,6 @@
+import os
 import requests
+from bs4 import BeautifulSoup
 
 from .base import BaseImporter
 
@@ -15,19 +17,42 @@ class FutbolEnLaTVImporter(BaseImporter):
 
         print("Descargando FutbolEnLaTV...")
 
-        response = requests.get(
+        headers = {
+            "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+        }
+
+        r = requests.get(
             self.URL,
-            timeout=20,
-            headers={
-                "User-Agent":
-                "Mozilla/5.0"
-            }
+            headers=headers,
+            timeout=30
         )
 
-        return response.text
+        r.raise_for_status()
+
+        os.makedirs("cache", exist_ok=True)
+
+        with open(
+            "cache/futbolenlatv.html",
+            "w",
+            encoding="utf8"
+        ) as f:
+
+            f.write(r.text)
+
+        return r.text
 
     def parse(self, html):
 
-        print("Parser pendiente...")
+        soup = BeautifulSoup(html, "html.parser")
 
-        return []
+        print("Título:", soup.title.text if soup.title else "Sin título")
+
+        events = []
+
+        #
+        # El parser real se implementará
+        # en el Commit 4.2
+        #
+
+        return events

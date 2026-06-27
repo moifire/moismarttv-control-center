@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from datetime import datetime
 
 
 class BaseImporter(ABC):
@@ -11,15 +12,19 @@ class BaseImporter(ABC):
 
     def update(self):
 
-        print(f"[{self.source}] Iniciando importación...")
+        print("=" * 60)
+        print(f"Iniciando importador: {self.source}")
+        print("=" * 60)
 
         html = self.download()
 
+        if not html:
+            print("No se pudo descargar contenido.")
+            return []
+
         self.events = self.parse(html)
 
-        self.save()
-
-        print(f"[{self.source}] {len(self.events)} eventos importados.")
+        print(f"Eventos encontrados: {len(self.events)}")
 
         return self.events
 
@@ -31,40 +36,25 @@ class BaseImporter(ABC):
     def parse(self, html):
         pass
 
-    def save(self):
+    def build_event(
+        self,
+        date="",
+        time="",
+        sport="",
+        competition="",
+        title="",
+        channel="",
+        backdrop=""
+    ):
 
-        from database.database import Database
-
-        db = Database()
-
-        for event in self.events:
-
-            db.execute(
-                """
-                INSERT INTO events
-                (
-                    date,
-                    time,
-                    sport,
-                    competition,
-                    title,
-                    channel,
-                    backdrop,
-                    source
-                )
-                VALUES
-                (?,?,?,?,?,?,?,?)
-                """,
-                (
-                    event["date"],
-                    event["time"],
-                    event["sport"],
-                    event["competition"],
-                    event["title"],
-                    event["channel"],
-                    event.get("backdrop", ""),
-                    self.source
-                )
-            )
-
-        db.close()
+        return {
+            "date": date,
+            "time": time,
+            "sport": sport,
+            "competition": competition,
+            "title": title,
+            "channel": channel,
+            "backdrop": backdrop,
+            "source": self.source,
+            "created": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        }

@@ -8,4 +8,6 @@ class AgendaService:
 
         importer = FutbolEnLaTVImporter()
 
-        return importer.update()
+        eventos = importer.update()
+
+        return eventos
