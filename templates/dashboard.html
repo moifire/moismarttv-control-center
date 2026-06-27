@@ -1,0 +1,368 @@
+{% extends "layout.html" %}
+
+{% block title %}Dashboard | MoiSmartTV Control Center{% endblock %}
+
+{% block page_title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="row g-4">
+
+    <!-- Eventos -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card card-custom shadow">
+
+            <div class="card-body">
+
+                <h6 class="text-secondary">
+
+                    ⚽ Eventos Hoy
+
+                </h6>
+
+                <h1>
+
+                    {{ stats.eventos }}
+
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- IPTV -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card card-custom shadow">
+
+            <div class="card-body">
+
+                <h6 class="text-secondary">
+
+                    📺 Canales IPTV
+
+                </h6>
+
+                <h1>
+
+                    {{ stats.canales }}
+
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Películas -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card card-custom shadow">
+
+            <div class="card-body">
+
+                <h6 class="text-secondary">
+
+                    🎬 Películas
+
+                </h6>
+
+                <h1>
+
+                    {{ stats.peliculas }}
+
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Series -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card card-custom shadow">
+
+            <div class="card-body">
+
+                <h6 class="text-secondary">
+
+                    📺 Series
+
+                </h6>
+
+                <h1>
+
+                    {{ stats.series }}
+
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row mt-4">
+
+    <div class="col-lg-8">
+
+        <div class="card card-custom shadow">
+
+            <div class="card-header bg-transparent">
+
+                <h5>
+
+                    🚀 Estado del sistema
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-dark table-borderless">
+
+                    <tr>
+
+                        <td>Agenda deportiva</td>
+
+                        <td>
+
+                            <span class="badge bg-success">
+
+                                Activa
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Parser FutbolEnLaTV</td>
+
+                        <td>
+
+                            <span class="badge bg-warning text-dark">
+
+                                Pendiente
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Stremio</td>
+
+                        <td>
+
+                            <span class="badge bg-secondary">
+
+                                Próximamente
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>IPTV</td>
+
+                        <td>
+
+                            <span class="badge bg-secondary">
+
+                                Próximamente
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Base de datos</td>
+
+                        <td>
+
+                            <span class="badge bg-success">
+
+                                SQLite OK
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-lg-4">
+
+        <div class="card card-custom shadow">
+
+            <div class="card-header bg-transparent">
+
+                <h5>
+
+                    Información
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <p>
+
+                    👤 Usuarios:
+
+                    <b>{{ stats.usuarios }}</b>
+
+                </p>
+
+                <p>
+
+                    🕒 Última actualización
+
+                </p>
+
+                <h4>
+
+                    {{ stats.ultima_actualizacion }}
+
+                </h4>
+
+                <hr>
+
+                <button class="btn btn-main w-100">
+
+                    🚀 Actualizar MoiSmartTV
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row mt-4">
+
+    <div class="col">
+
+        <div class="card card-custom">
+
+            <div class="card-header bg-transparent">
+
+                <h5>
+
+                    Próximos módulos
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row text-center">
+
+                    <div class="col">
+
+                        ⚽<br>
+
+                        Agenda
+
+                    </div>
+
+                    <div class="col">
+
+                        📺<br>
+
+                        IPTV
+
+                    </div>
+
+                    <div class="col">
+
+                        🎬<br>
+
+                        Stremio
+
+                    </div>
+
+                    <div class="col">
+
+                        🎥<br>
+
+                        Películas
+
+                    </div>
+
+                    <div class="col">
+
+                        📺<br>
+
+                        Series
+
+                    </div>
+
+                    <div class="col">
+
+                        🖼<br>
+
+                        Logos
+
+                    </div>
+
+                    <div class="col">
+
+                        ⚙<br>
+
+                        Configuración
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
